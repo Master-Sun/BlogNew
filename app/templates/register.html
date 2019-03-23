@@ -5,6 +5,42 @@
 		<meta charset="utf-8">
 		<link href="/static/css/login_reglogin.css" rel='stylesheet' type='text/css' />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="/static/js/jquery-1.11.3.js"></script>
+    <script>
+        $(function () {
+            function checkUname() {
+                flag = true;
+                $.ajax({
+                    "url":'/checkUname',
+                    "type":"get",
+                    "data":'loginname=' + $('#loginname').val(),
+                    "async":false,
+                    "success":function (resp) {
+                        var span = $('span');
+                        console.log(resp);
+                        if(resp==1){
+                            span.html('用户名可用')
+                        }else{
+                            span.html('用户名已存在');
+                            span.css('color','red');
+                            flag = false
+                            }
+                        },
+                    "datatype":"html"
+                });
+                return flag
+            }
+
+            $('#loginname').blur(function () {
+                checkUname()
+            });
+        })
+    </script>
+    <style>
+        span{
+            float: right;
+        }
+    </style>
 </head>
 <body>
 		<div class="bg">
@@ -17,17 +53,21 @@
 		<p></p>
 			<form action="/register" method="post">
 				<ul class="left-form">
-					<h2>新账户:</h2>
+					<h2>新账户:    <span></span></h2>
 					<li>
-            <input type="text" name="username" placeholder="请输入用户名" required/>
+            <input type="text" name="loginname" placeholder="请输入用户名" id="loginname" required/>
 						<div class="clear"> </div>
-					</li> 
+					</li>
+                    <li>
+            <input type="text" name="uname" placeholder="请输入昵称" required/>
+						<div class="clear"> </div>
+					</li>
 					<li>
             <input type="email" name="email" placeholder="请输入邮箱" required/>
 						<div class="clear"> </div>
 					</li> 
 					<li>
-            <input type="url" name="url" placeholder="请输入个人主站地址" required/>
+            <input type="url" name="url" placeholder="请输入个人主站地址"/>
 						<div class="clear"> </div>
 					</li> 
 					<li>
@@ -40,7 +80,7 @@
             </li>
 					<!--用于记录注册跳转来源，方便注册之后跳转之前的页面-->
           <input type="hidden" name="source_url" value="">
-					<input type="submit" value="创建并登录">
+					<input type="submit" value="创建并登录" id="submit">
 					<div class="clear"> </div>
 				</ul>
 				<div class="clear"> </div>
