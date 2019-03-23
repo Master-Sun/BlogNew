@@ -46,17 +46,21 @@
         <li><a href="/release">发表博客</a></li>
       </nav>
     </div>
-    <a href="/login" id="login" target="_blank">
+
         {% if params.user %}
+            <a href="#" id="login" target="">
             欢迎：{{ params.user.uname }}
         {% else %}
+            <a href="/login" id="login" target="_blank">
             登录
         {% endif %}
     </a>
-    <a href="register.html" id="register" target="_blank">
+
         {% if session %}
+            <a href="logout" id="register" target="">
             退出
         {% else %}
+            <a href="/register" id="register" target="_blank">
             注册
         {% endif %}
     </a>

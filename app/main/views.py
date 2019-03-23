@@ -8,6 +8,7 @@ from ..models import *
 from .. import db
 
 
+#显示首页，若用户已登录，右上角显示用户昵称
 @main.route('/')
 def main_index():
     #查询category中的所有分类信息
@@ -21,6 +22,7 @@ def main_index():
     return render_template('index.html',params=locals())
 
 
+#发布博客
 @main.route('/release',methods=['GET','POST'])
 def release_views():
     if request.method == 'GET':
