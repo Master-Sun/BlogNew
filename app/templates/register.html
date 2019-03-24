@@ -8,6 +8,7 @@
         <script src="/static/js/jquery-1.11.3.js"></script>
     <script>
         $(function () {
+            //检测用户名是否可用，返回值ｔｒｕｅ代表可用
             function checkUname() {
                 flag = true;
                 $.ajax({
@@ -19,7 +20,8 @@
                         var span = $('span');
                         console.log(resp);
                         if(resp==1){
-                            span.html('用户名可用')
+                            span.html('用户名可用');
+                            span.css('color','green')
                         }else{
                             span.html('用户名已存在');
                             span.css('color','red');
@@ -30,10 +32,26 @@
                 });
                 return flag
             }
-
+            //输入用户名后动态检测是否可用
             $('#loginname').blur(function () {
                 checkUname()
             });
+
+            $('form').submit(function () {
+                var res = checkUname();
+                var upwd1 = $('#upwd1').val();
+                var upwd2 = $('#upwd2').val();
+                if(res==false){
+                    alert('注册失败，用户名已存在');
+                    return false
+                }else if(upwd1 != upwd2){
+                    alert('注册失败，两次密码不一致');
+                    return false
+                }else{
+                    alert('注册成功');
+                    return true
+                }
+            })
         })
     </script>
     <style>
@@ -71,11 +89,11 @@
 						<div class="clear"> </div>
 					</li> 
 					<li>
-            <input type="password" name="password" placeholder="请输入密码" required/>
+            <input type="password" name="upwd" placeholder="请输入密码" required id="upwd1"/>
 						<div class="clear"> </div>
           </li>
           <li>
-              <input type="password" name="password1" placeholder="请再次确认密码" required/>
+              <input type="password" name="upwd2" placeholder="请再次确认密码" required id="upwd2"/>
               <div class="clear"> </div>
             </li>
 					<!--用于记录注册跳转来源，方便注册之后跳转之前的页面-->

@@ -36,16 +36,23 @@ def register_views():
     if request.method == 'GET':
         return render_template('register.html')
     else:
-        loginname = request.form['loginname']
-        uname = request.form['uname']
-        email = request.form['email']
-        url = request.form.get('url',None)
-        upwd = request.form['password']
-        print(locals())
-        user = User.query.filter_by(loginname=loginname).first()
-        if user:
-            return "用户名已存在"
-        return "注册成功"
+        user = User()
+        user.loginname = request.form['loginname']
+        user.uname = request.form['uname']
+        user.email = request.form['email']
+        user.upwd = request.form['upwd']
+        url = request.form.get('url')
+        if url:
+            user.url = url
+        try:
+            db.session.add(user)
+            db.session.commit()
+        except Exception as e:
+            print('err=',e)
+            return "注册失败，请联系管理员"
+        session['loginname'] = request.form['loginname']
+        session['id'] = user.ID
+        return redirect('/')
 
 
 #注册界面判断用户名是否可用
