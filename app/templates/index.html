@@ -23,8 +23,8 @@
     <div class="menu">
       <nav class="nav" id="topnav">
         <h1 class="logo"><a href="index.html">个人博客</a></h1>
-        <li><a href="index.html">网站首页</a> </li>
-        <li><a href="list.html">文章列表</a>
+        <li><a href="/index">网站首页</a> </li>
+        <li><a href="/list">文章列表</a>
           <ul class="sub-nav">
 {#            <li><a href="list.html">Python</a></li>#}
 {#            <li><a href="list.html">python Web</a></li>#}
@@ -33,7 +33,7 @@
 {#            <li><a href="list.html">JS实例索引</a></li>#}
               {% for cate in params.categories %}
                   <li>
-                      <a href="/list?id={{ cate.id }}">{{ cate.cate_name }}</a>
+                      <a href="/list?cate_id={{ cate.id }}">{{ cate.cate_name }}</a>
                   </li>
               {% endfor %}
           </ul>
@@ -152,7 +152,7 @@
 
       <div class="blogs" data-scroll-reveal="enter bottom over 1s">
         <h3 class="blogtitle">
-            <a href="/info" target="_blank">{{ topic.title }} </a>
+            <a href="/info?t_id={{ topic.id }}" target="_blank">{{ topic.title }} </a>
         </h3>
 
           {% if topic.images %}

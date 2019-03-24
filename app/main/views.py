@@ -9,6 +9,7 @@ from .. import db
 
 
 #显示首页，若用户已登录，右上角显示用户昵称
+@main.route('/index')
 @main.route('/')
 def main_index():
     #查询category中的所有分类信息
@@ -69,6 +70,26 @@ def release_views():
 
 @main.route('/info')
 def info_views():
-    basedir = os.path.dirname(__file__)
-    print(basedir)
-    return render_template('info.html')
+    t_id = request.args['t_id']
+    topic = Topic.query.filter_by(id=t_id).first()
+    categories = Category.query.all()
+    if 'id' in session and 'loginname' in session:
+        id = session['id']
+        user = User.query.filter_by(ID=id).first()
+    return render_template('info.html',params=locals())
+
+
+#博客分类查看
+@main.route('/list')
+def list_views():
+    categories = Category.query.all()
+    cate_id = request.args.get('cate_id')
+    if cate_id:
+        category = Category.query.filter_by(id=cate_id).first()
+        topics = category.topics.all()
+    else:
+        topics = Topic.query.limit(20).all()
+    if 'id' in session and 'loginname' in session:
+        id = session['id']
+        user = User.query.filter_by(ID=id).first()
+    return render_template('list.html',params=locals())
