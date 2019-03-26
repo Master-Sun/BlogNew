@@ -108,7 +108,7 @@
 {#          <li class="slide"><a href="info.html" target="_blank"><img src="/static/images/banner03.jpg"><span class="imginfo">python-win10下使用定时任务执行程序</span></a></li>#}
             {% for topic in params.topics[:3] %}
                 <li class="slide">
-                    <a href="/info?id={{ topic.id }}" target="_blank">
+                    <a href="/info?t_id={{ topic.id }}" target="_blank">
                         <img src="/static/{{ topic.images }}">
                         <span class="imginfo">{{ topic.title }}</span>
                     </a>
@@ -126,7 +126,7 @@
       <div class="toppic">
           {% for topic in params.topics[3:5] %}
         <li>
-            <a href="/info?id={{ topic.id }}" target="_blank">
+            <a href="/info?t_id={{ topic.id }}" target="_blank">
                 <i>
                     <img src="/static/{{ topic.images }}">
                 </i>
