@@ -119,23 +119,15 @@
 					    <img alt="" src="/static/{{ params.topic.images }}">
                     {% endif %}
                     <br>
-                {{ params.topic.content | safe }}
-					&nbsp;
+                {% for line in params.topic.content.split('\r\n') %}
+                    <p>{{ line }}</p>
+                    <br>
+                {% endfor %}
 
 				</div>
 			</div>
 
-            <script>
-                console.log(1)
-                var div = $('#news_con');
 
-                var text = {{ params.topic.content }}
-                console.log(text)
-                var div1 = $('<div></div>')
-                div1.html(text)
-                div.append(div1)
-
-            </script>
 
 
 
@@ -151,7 +143,7 @@
 			</div>
 			<div class="nextinfo">
 				<p>上一篇：<a href="info.html">作为一个设计师,如果遭到质疑你是否能恪守自己的原则?</a></p>
-				<p>下一篇：<a href="list.html">返回列表</a></p>
+				<p>下一篇：<a href="/list">返回列表</a></p>
 			</div>
 			<div class="news_pl">
 				<h2>文章评论</h2>
@@ -243,14 +235,22 @@
 							</ol>
 							<div id="commentform">
 								<h3 id="respond">在这添加你的留言！</h3>
-								<form action="#" method="post">
-									<dir id="editor"></dir>
+
+
+
+								<form action="/reply" method="post">
+{#									<dir id="editor"></dir>#}
+                                    <textarea name="reply" id="editor" cols="63" rows="10"></textarea>
+                                    <br>
 									<br>
 									<p>
-										<input id="id_article" name="article" type="hidden" value="1">
+										<input id="id_article" name="topic_id" type="hidden" value="{{ params.topic.id }}">
 										<input name="submit" type="submit" id="submit" tabindex="5" value="提交" class="button" />
 									</p>
 								</form>
+
+
+
 							</div>
 						</div>
 
@@ -347,33 +347,33 @@
 		<p>Design by <a href=# target="_blank">皮爷の博客</a> <a href="#">备XXXXXXXX号-1</a></p>
 	</footer>
 	<a href="#" class="cd-top">Top</a>
-	<script>
-		var E = window.wangEditor
-		var editor = new E('#editor')
-		// 或者 var editor = new E( document.getElementById('editor') )
-		editor.customConfig.menus = [
-			'head', // 标题
-			'bold', // 粗体
-			'fontSize', // 字号
-			'fontName', // 字体
-			'italic', // 斜体
-			'underline', // 下划线
-			'strikeThrough', // 删除线
-			'foreColor', // 文字颜色
-			'backColor', // 背景颜色
-			'link', // 插入链接
-			'list', // 列表
-			'justify', // 对齐方式
-			'quote', // 引用
-			'emoticon', // 表情
-			'image', // 插入图片
-			'table', // 表格
-			'video', // 插入视频
-			'undo', // 撤销
-			'redo' // 重复
-		]
-		editor.create()
-	</script>
+{#	<script>#}
+{#		var E = window.wangEditor#}
+{#		var editor = new E('#editor')#}
+{#		// 或者 var editor = new E( document.getElementById('editor') )#}
+{#		editor.customConfig.menus = [#}
+{#			'head', // 标题#}
+{#			'bold', // 粗体#}
+{#			'fontSize', // 字号#}
+{#			'fontName', // 字体#}
+{#			'italic', // 斜体#}
+{#			'underline', // 下划线#}
+{#			'strikeThrough', // 删除线#}
+{#			'foreColor', // 文字颜色#}
+{#			'backColor', // 背景颜色#}
+{#			'link', // 插入链接#}
+{#			'list', // 列表#}
+{#			'justify', // 对齐方式#}
+{#			'quote', // 引用#}
+{#			'emoticon', // 表情#}
+{#			'image', // 插入图片#}
+{#			'table', // 表格#}
+{#			'video', // 插入视频#}
+{#			'undo', // 撤销#}
+{#			'redo' // 重复#}
+{#		]#}
+{#		editor.create()#}
+{#	</script>#}
 </body>
 
 </html>

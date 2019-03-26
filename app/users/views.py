@@ -3,6 +3,7 @@ from . import users
 from flask import redirect,render_template,request,session
 from ..models import *
 from .. import db
+import datetime
 
 
 @users.route('/login',methods=['GET','POST'])
@@ -64,3 +65,26 @@ def check_uname():
         return '0'
     else:
         return '1'
+
+
+@users.route('/reply',methods=['POST'])
+def reply_views():
+    if request.method == 'POST':
+        url = request.headers['Referer']
+        print(url)
+        user_id = session['id']
+        topic_id = request.form['topic_id']
+        content = request.form['reply']
+        reply_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        reply = Reply()
+        reply.user_id = user_id
+        reply.topic_id = topic_id
+        reply.content = content
+        reply.reply_time = reply_time
+        print(locals())
+        try:
+            db.session.add(reply)
+            db.session.commit()
+        except Exception as err:
+            print('留言板块插入异常:',err)
+        return redirect(url)
