@@ -72,7 +72,20 @@ def release_views():
 def info_views():
     t_id = request.args['t_id']
     topic = Topic.query.filter_by(id=t_id).first()
+    #搜索上一篇博客,没有则查询对象为空，前端进行空判断来显示对应的内容
+    t_id_prev = int(t_id) - 1
+    topic_prev = Topic.query.filter_by(id=t_id_prev).first()
+
+    # 搜索下一篇博客,没有则查询对象为空，前端进行空判断来显示对应的内容
+    t_id_after = int(t_id) + 1
+    topic_after = Topic.query.filter_by(id=t_id_after).first()
+
+    #导航栏：文章类别
     categories = Category.query.all()
+
+    #留言板块
+    replies = Reply.query.filter_by(topic_id=t_id).all()
+
     if 'id' in session and 'loginname' in session:
         id = session['id']
         user = User.query.filter_by(ID=id).first()
