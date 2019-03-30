@@ -88,3 +88,17 @@ def reply_views():
         except Exception as err:
             print('留言板块插入异常:',err)
         return redirect(url)
+
+
+@users.route('/voke')
+def voke_views():
+    user_id = session['id']
+    topic_id = request.args['topic_id']
+    voke = Voke()
+    voke.user_id = user_id
+    voke.topic_id = topic_id
+    db.session.add(voke)
+    db.session.commit()
+    vokes = Voke.query.filter_by(topic_id=topic_id).count()
+    print(vokes)
+    return '1'
