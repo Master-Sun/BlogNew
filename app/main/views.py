@@ -79,10 +79,8 @@ def info_views():
     # 搜索下一篇博客,没有则查询对象为空，前端进行空判断来显示对应的内容
     t_id_after = int(t_id) + 1
     topic_after = Topic.query.filter_by(id=t_id_after).first()
-
     #导航栏：文章类别
     categories = Category.query.all()
-
     #留言板块
     replies = Reply.query.filter_by(topic_id=t_id).all()
 

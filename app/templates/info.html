@@ -46,13 +46,13 @@
             <a href="#" id="login" target="">
             欢迎：{{ params.user.uname }}
         {% else %}
-            <a href="/login" id="login" target="_blank">
+            <a href="/login" id="login" target="">
             登录
         {% endif %}
     </a>
 
         {% if session %}
-            <a href="logout" id="register" target="">
+            <a href="/logout" id="register" target="">
             退出
         {% else %}
             <a href="/register" id="register" target="_blank">
@@ -134,9 +134,25 @@
 
 			<div class="share">
 				<p class="diggit">
-					<a href="javascript:void(0);" id="voke">
+
+                {% if params.user %}
+                    {% if params.topic in params.user.voke_topics %}
+					    <a href="javascript:void(0);">
+						    已赞！
+                    {% else %}
+                        <a href="javascript:void(0);" id="voke">
+						    很赞哦！
+                    {% endif %}
+
+                {% else %}
+                    <a href="javascript:void(0);" id="voke">
 						很赞哦！
-					</a>(<b id="diggnum">{{ params.topic.voke_users.count() }}</b>)
+
+                {% endif %}
+                    </a>
+
+
+                    (<b id="diggnum">{{ params.topic.voke_users.count() }}</b>)
 				</p>
 				<p class="dasbox"><a href="#" class="dashang" title="打赏，支持一下">打赏本站</a></p>
 				<div class="hide_box"></div>
@@ -149,6 +165,13 @@
                         var topic_id = {{ params.topic.id }};
                         var data = 'topic_id='+topic_id;
                         $.get('/voke',data,function (resp) {
+                            if(resp==-1){
+                                alert('请先登录')
+                            }else{
+                                $('#diggnum').html(resp);
+                                $('#voke').html('已赞！');
+                                $('#voke').unbind();
+                            }
                             console.log(resp)
                         },'html')
                     })

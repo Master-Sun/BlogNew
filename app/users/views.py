@@ -9,8 +9,11 @@ import datetime
 @users.route('/login',methods=['GET','POST'])
 def login_views():
     if request.method == 'GET':
-        return render_template('login.html')
+        #记录请求源地址，post请求时再带回来
+        referer = request.headers.get('Referer','/')
+        return render_template('login.html',params=locals())
     else:
+        referer = request.form['source_url']
         loginname = request.form['username']
         upwd = request.form['password']
         user = User.query.filter_by(loginname=loginname,upwd=upwd).first()
@@ -18,7 +21,7 @@ def login_views():
             #将id和loginname同时存进session
             session['loginname'] = loginname
             session['id'] = user.ID
-            return redirect('/')
+            return redirect(referer)
         else:
             return redirect('/login')
 
@@ -28,7 +31,8 @@ def login_views():
 def logout_views():
     del session['id']
     del session['loginname']
-    return redirect('/')
+    referer = request.headers.get('Referer','/')
+    return redirect(referer)
 
 
 #用户注册功能
@@ -92,13 +96,16 @@ def reply_views():
 
 @users.route('/voke')
 def voke_views():
-    user_id = session['id']
-    topic_id = request.args['topic_id']
-    voke = Voke()
-    voke.user_id = user_id
-    voke.topic_id = topic_id
-    db.session.add(voke)
-    db.session.commit()
-    vokes = Voke.query.filter_by(topic_id=topic_id).count()
-    print(vokes)
-    return '1'
+    user_id = session.get('id',False)
+    if user_id:
+        topic_id = request.args['topic_id']
+        voke = Voke()
+        voke.user_id = user_id
+        voke.topic_id = topic_id
+        db.session.add(voke)
+        db.session.commit()
+        vokes = Voke.query.filter_by(topic_id=topic_id).count()
+        #返回博客的点赞数量，前端异步刷新
+        return str(vokes)
+    else:
+        return '-1'
