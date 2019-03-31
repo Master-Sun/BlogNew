@@ -26,11 +26,6 @@
         <li><a href="/index">网站首页</a> </li>
         <li><a href="/list">文章列表</a>
           <ul class="sub-nav">
-{#            <li><a href="list.html">Python</a></li>#}
-{#            <li><a href="list.html">python Web</a></li>#}
-{#            <li><a href="list.html">爬虫</a></li>#}
-{#            <li><a href="list.html">人工智能</a></li>#}
-{#            <li><a href="list.html">JS实例索引</a></li>#}
               {% for cate in params.categories %}
                   <li>
                       <a href="/list?cate_id={{ cate.id }}">{{ cate.cate_name }}</a>
@@ -51,41 +46,20 @@
             <a href="#" id="login" target="">
             欢迎：{{ params.user.uname }}
         {% else %}
-            <a href="/login" id="login" target="_blank">
+            <a href="/login" id="login" target="">
             登录
         {% endif %}
     </a>
 
         {% if session %}
-            <a href="logout" id="register" target="">
+            <a href="/logout" id="register" target="">
             退出
         {% else %}
             <a href="/register" id="register" target="_blank">
             注册
         {% endif %}
     </a>
-    <!--menu end-->
-    <!--mnav begin-->
-    <div id="mnav">
-      <h2><a href="index.html" class="mlogo">个人博客</a><span class="navicon"></span></h2>
-      <dl class="list_dl">
-        <dt class="list_dt"> <a href="index.html">网站首页</a> </dt>
-        <dt class="list_dt"> <a href="#">文章列表</a> </dt>
-        <dd class="list_dd">
-          <ul>
-            <li><a href="list.html">Python</a></li>
-            <li><a href="list.html">python Web</a></li>
-            <li><a href="list.html">爬虫</a></li>
-            <li><a href="list.html">人工智能</a></li>
-            <li><a href="list.html">JS实例索引</a></li>
-          </ul>
-        </dd>
-        <dt class="list_dt"> <a href="photo.html">我的相册</a> </dt>
-        <dt class="list_dt"> <a href="time.html">时间轴</a> </dt>
-        <dt class="list_dt"> <a href="gbook.html">留言</a> </dt>
-        <dt class="list_dt"> <a href="about.html">关于我</a> </dt>
-      </dl>
-    </div>
+
     <!--mnav end-->
   </header>
     {% block pagebg %}
