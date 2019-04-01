@@ -20,46 +20,7 @@
 <body>
   <header id="header">
     <!--menu begin-->
-    <div class="menu">
-      <nav class="nav" id="topnav">
-        <h1 class="logo"><a href="index.html">个人博客</a></h1>
-        <li><a href="/index">网站首页</a> </li>
-        <li><a href="/list">文章列表</a>
-          <ul class="sub-nav">
-              {% for cate in params.categories %}
-                  <li>
-                      <a href="/list?cate_id={{ cate.id }}">{{ cate.cate_name }}</a>
-                  </li>
-              {% endfor %}
-          </ul>
-        </li>
-        <li><a href="photo.html">我的相册</a>
-        </li>
-        <li><a href="time.html">时间轴</a> </li>
-        <li><a href="gbook.html">留言</a> </li>
-        <li><a href="about.html">关于我</a> </li>
-        <li><a href="/release">发表博客</a></li>
-      </nav>
-    </div>
-
-        {% if params.user %}
-            <a href="#" id="login" target="">
-            欢迎：{{ params.user.uname }}
-        {% else %}
-            <a href="/login" id="login" target="">
-            登录
-        {% endif %}
-    </a>
-
-        {% if session %}
-            <a href="/logout" id="register" target="">
-            退出
-        {% else %}
-            <a href="/register" id="register" target="_blank">
-            注册
-        {% endif %}
-    </a>
-
+    {% include 'header.html' %}
     <!--mnav end-->
   </header>
     {% block pagebg %}

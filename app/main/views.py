@@ -104,3 +104,24 @@ def list_views():
         id = session['id']
         user = User.query.filter_by(ID=id).first()
     return render_template('list.html',params=locals())
+
+
+@main.route('/gbook')
+def gbook_views():
+    categories = Category.query.all()
+    return render_template('gbook.html', params=locals())
+
+@main.route('/time')
+def time_views():
+    categories = Category.query.all()
+    return render_template('time.html', params=locals())
+
+@main.route('/photo')
+def photo_views():
+    categories = Category.query.all()
+    return render_template('photo.html', params=locals())
+
+@main.route('/about')
+def about_views():
+    categories = Category.query.all()
+    return render_template('about.html', params=locals())

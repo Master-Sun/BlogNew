@@ -22,43 +22,7 @@
 <body>
 	<header id="header">
 		<!--menu begin-->
-		<div class="menu">
-			<nav class="nav" id="topnav">
-				<h1 class="logo"><a href="index.html">皮爷の博客</a></h1>
-				<li><a href="/index">网站首页</a> </li>
-				<li><a href="/list">文章列表</a>
-					<ul class="sub-nav">
-                        {% for cate in params.categories %}
-						<li><a href="/list?cate_id={{ cate.id }}">{{ cate.cate_name }}</a></li>
-                        {% endfor %}
-					</ul>
-				</li>
-				<li><a href="photo.html">我的相册</a>
-				</li>
-				<li><a href="time.html">时间轴</a> </li>
-				<li><a href="gbook.html">留言</a> </li>
-				<li><a href="about.html">关于我</a> </li>
-				<li><a href="release.html">发表博客</a></li>
-			</nav>
-		</div>
-		<!--menu end-->
-		{% if params.user %}
-            <a href="#" id="login" target="">
-            欢迎：{{ params.user.uname }}
-        {% else %}
-            <a href="/login" id="login" target="">
-            登录
-        {% endif %}
-    </a>
-
-        {% if session %}
-            <a href="/logout" id="register" target="">
-            退出
-        {% else %}
-            <a href="/register" id="register" target="_blank">
-            注册
-        {% endif %}
-    </a>
+		{% include 'header.html' %}
 		<!--mnav begin-->
 		<div id="mnav">
 			<h2><a href="index.html" class="mlogo">皮爷の博客</a><span class="navicon"></span></h2>
@@ -314,10 +278,24 @@
 									<p>
 										<input id="id_article" name="topic_id" type="hidden" value="{{ params.topic.id }}">
 										<input name="submit" type="submit" id="submit" tabindex="5" value="提交" class="button" />
+                                        <input type="hidden" id="session" value="{{ params.id }}">
 									</p>
 								</form>
 
+                                <script>
+                                    $(function () {
+                                        $('form').submit(function () {
+                                            var session = $('#session').val();
+                                            if(session){
+                                                return true
+                                            }else{
+                                                alert('请先登录');
+                                                return false
+                                            }
+                                        })
 
+                                    })
+                                </script>
 
 							</div>
 						</div>
