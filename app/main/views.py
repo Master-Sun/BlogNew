@@ -3,7 +3,7 @@ import datetime
 import os
 
 from . import main
-from flask import render_template, request, session,redirect
+from flask import render_template, request, session, redirect, make_response
 from ..models import *
 from .. import db
 
@@ -87,7 +87,15 @@ def info_views():
     if 'id' in session and 'loginname' in session:
         id = session['id']
         user = User.query.filter_by(ID=id).first()
-    return render_template('info.html',params=locals())
+
+    #当浏览器浏览一篇博客后，存入博客id进cookie，后续根据cookie决定是否更新阅读数
+    if t_id not in request.cookies:
+        topic.read_num += 1
+        db.session.add(topic)
+        db.session.commit()
+    resp = make_response(render_template('info.html', params=locals()))
+    resp.set_cookie(t_id,'1',60*5)
+    return resp
 
 
 #博客分类查看
